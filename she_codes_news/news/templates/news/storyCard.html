@@ -1,7 +1,9 @@
 <div class="story-card" id="story-card-{{ position }}">
     <!-- calling the url. app name is news -->
     <a href="{% url 'news:story' story.id %}"> 
-        {% if position < 5 %}
+        {% if story.img_url != "0" %}
+            <img src="{{ story.img_url }}">
+        {% elif position < 5 %}
             <img src="../static/news/images/placeholder-{{ position }}.jpg">
         {% else %}
             <img src="https://picsum.photos/600">

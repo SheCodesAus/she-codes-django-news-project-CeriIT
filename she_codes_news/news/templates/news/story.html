@@ -13,5 +13,12 @@
         <img src="{% static '/news/images/placeholder-5.jpg' %}">
         {{ story.content|linebreaks }}
     </div>
+    <div>
+        {% if story.favourited_by.count %}
+            Liked by: {{story.favourited_by.count}} user {{story.favourited_by.count|pluralize:s }} 
+            {% for user in story.favourited_by.all %} {{user.username}} {% endfor %}
+        {% endif %}
+        <a href="{% 'news:like' story.id %}"><button>{% if request.user in story.favourited_by.all %}Unlike{% else %}Like{% endif %} Story</button></a>
+    </div>
 </div>
 {% endblock %}

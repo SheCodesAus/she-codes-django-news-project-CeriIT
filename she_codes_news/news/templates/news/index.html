@@ -1,36 +1,58 @@
-    {% extends "base.html" %}
-    {% load static %}
+{% extends "base.html" %}
+{% load static %}
 
-    {% block stylesheets %}
-    <link rel="stylesheet" type="text/css" href="{% static 'news/styles.css' %}">
-    {% endblock %}
+{% block stylesheets %}
+<link rel="stylesheet" type="text/css" href="{% static 'news/styles.css' %}">
+{% endblock %}
 
-    {% block content %}
+{% block content %}
 
-    <a href="{% url 'news:newStory' %}">Write New Story</a>
 
-    <h2>Latest News</h2>
+{% if request.user.is_authenticated %}
+<a href="{% url 'news:newStory' %}">Write New Story</a>
+{% endif %}
 
-    <div id="latest-stories">
-        {% if latest_stories %}
-            {% for story in latest_stories %}
-                {% include './storyCard.html' with story=story position=forloop.counter %}
-            {% endfor %}
-        {% else %}
-            <p>No stories are available.</p>
-        {% endif %}
-    </div>
 
-    <div id="all-stories">
-        {% if latest_stories %}
-            {% for story in all_stories %}
-                {% include './storyCard.html' with story=story %}
-            {% endfor %}
-        {% else %}
-            <p>No stories are available.</p>
-        {% endif %}
-    </div>
+<h2>{% if request.GET.order == "oldfirst" %}Old{% else %}Latest{% endif %} News</h2>
 
-    {% endblock %}
+<!-- <div id="latest-stories">
+    {% if latest_stories %}
+        {% for story in latest_stories %}
+            {% include './storyCard.html' with story=story position=forloop.counter %}
+        {% endfor %}
+    {% else %}
+        <p>No stories are available.</p>
+    {% endif %}
+</div> -->
 
-    
+
+<form method="GET">
+    {{form.as_table}}
+
+    <!-- <select name="order">
+        <option value="">Newest First</option>
+        <option value="oldfirst" {% if request.GET.order == "oldfirst" %} selected="true" {% endif %}>Oldest First</option>
+    </select>
+    <select name="author">
+        <option value ="">all</option>
+        {% for author in author_list %}
+        <option value ="{{author.id}}" {% if request.GET.order == "{{author.id|stringformat}}" %} selected="true" {% endif %} >{{author.username}}</option>
+        {% endfor %}
+
+    </select>
+    <input type="search" name="search" placeholder="search" value="{{request.get.search}}"> -->
+    <button type="submit">filter</button>
+</form>
+
+<div id="all-stories">
+    {% if all_stories %}
+        {% for story in all_stories %}
+            {% include './storyCard.html' with story=story %}
+        {% endfor %}
+    {% else %}
+        <p>No stories are available.</p>
+    {% endif %}
+</div>
+
+{% endblock %}
+

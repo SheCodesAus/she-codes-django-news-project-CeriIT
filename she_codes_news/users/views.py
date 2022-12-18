@@ -11,3 +11,9 @@ class CreateAccountView(CreateView):
     form_class = CustomUserCreationForm
     success_url = reverse_lazy("login") #django's built-in login page
     template_name = 'users/createAccount.html'
+
+class UserProfileView(generic.DetailView):
+    model = CustomUser
+
+# class UserListView(generic.ListView):
+#     model = CustomUser
