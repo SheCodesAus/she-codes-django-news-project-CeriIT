@@ -1,0 +1,13 @@
+{% extends "base.html" %}
+
+{% block content %}
+
+<form action="" method="POST">
+    <h2>Are you sure you want to delete "{{ object }}"?</h2>
+    <h3>THIS CAN NOT BE UNDONE</h3>
+    <strong>{{ newsstory.title }}</strong>
+    <p>{{ newsstory.content }}</p>
+    <input type="submit" value="Yes, I am very sure">
+</form>
+
+{% endblock %}

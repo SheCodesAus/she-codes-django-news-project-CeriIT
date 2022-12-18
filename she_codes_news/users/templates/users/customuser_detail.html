@@ -1,0 +1,12 @@
+{% extends base.html %}
+
+{% block content %}
+
+<h2>{{ customuser.username }}</h2>
+
+{% for story in CustomUser.NewsStory_set.all %}
+    {% include 'news/storyCard.html' with %}
+{% endfor %}
+
+{% endblock content %}
+
